@@ -37,7 +37,14 @@ export const metadata: Metadata = {
       "A private circle uniting high-caliber founders, visionary engineers, and next-generation leaders.",
     url: "https://vallieresociety.org",
     siteName: "Vallière Society",
+    locale: "tr_TR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VALLIÈRE — Üniversite Girişimciler Topluluğu",
+    description:
+      "Vizyoner ve hırslı üniversite girişimcilerini aynı masada buluşturan bağımsız kolektif.",
   },
 };
 
