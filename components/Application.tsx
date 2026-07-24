@@ -16,14 +16,31 @@ export default function Application() {
   const [submitted, setSubmitted] = useState(false);
   const [pledged, setPledged] = useState(false);
   const [fullName, setFullName] = useState("");
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
   const a = t.application;
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!pledged) return;
-    // No backend wired up — this gracefully acknowledges the submission.
-    // Replace with a POST to your endpoint / form service.
-    setSubmitted(true);
+    if (!pledged || sending) return;
+
+    const payload = Object.fromEntries(new FormData(e.currentTarget).entries());
+    setSending(true);
+    setFailed(false);
+
+    try {
+      const res = await fetch("/api/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setSubmitted(true);
+    } catch {
+      setFailed(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const textFields = [
@@ -191,23 +208,35 @@ export default function Application() {
                 </span>
               </label>
 
-              <button
-                type="submit"
-                disabled={!pledged}
-                aria-disabled={!pledged}
-                className={`group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden border px-9 py-4 text-[0.7rem] uppercase tracking-[0.22em] backdrop-blur-md transition-all duration-500 ${
-                  pledged
-                    ? "border-gold/50 bg-white/[0.02] text-champagne hover:border-gold hover:bg-gold/[0.05] hover:text-ivory hover:shadow-[0_0_36px_-8px_rgba(212,175,55,0.45)] active:scale-[0.98]"
-                    : "cursor-not-allowed border-white/10 bg-transparent text-slate/40"
-                }`}
-              >
-                {a.submit}
-                {/* Elegant underline sweep on hover */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 bg-gold/70 transition-all duration-500 group-hover:w-1/2"
-                />
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  disabled={!pledged || sending}
+                  aria-disabled={!pledged || sending}
+                  aria-busy={sending}
+                  className={`group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden border px-9 py-4 text-[0.7rem] uppercase tracking-[0.22em] backdrop-blur-md transition-all duration-500 ${
+                    pledged && !sending
+                      ? "border-gold/50 bg-white/[0.02] text-champagne hover:border-gold hover:bg-gold/[0.05] hover:text-ivory hover:shadow-[0_0_36px_-8px_rgba(212,175,55,0.45)] active:scale-[0.98]"
+                      : "cursor-not-allowed border-white/10 bg-transparent text-slate/40"
+                  }`}
+                >
+                  {sending ? a.sending : a.submit}
+                  {/* Elegant underline sweep on hover */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 bg-gold/70 transition-all duration-500 group-hover:w-1/2"
+                  />
+                </button>
+
+                {failed && (
+                  <p
+                    role="alert"
+                    className="mt-4 text-center text-xs font-light text-red-300/80"
+                  >
+                    {a.error}
+                  </p>
+                )}
+              </div>
 
               <p className="text-center text-[0.68rem] uppercase tracking-wide2 text-slate/60">
                 {a.confidence}

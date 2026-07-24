@@ -63,6 +63,8 @@ export interface Dictionary {
     value: Field;
     pledge: string;
     submit: string;
+    sending: string;
+    error: string;
     confidence: string;
     cardNote: string;
     cardStatus: string;
@@ -221,6 +223,8 @@ export const content: Record<Lang, Dictionary> = {
       pledge:
         "I pledge to honor the culture, stature, and prestige of the Vallière Society table.",
       submit: "REQUEST INVITATION",
+      sending: "SENDING…",
+      error: "Something went wrong. Please try again.",
       confidence: "Reviewed in strict confidence",
       cardNote:
         "Candidates who clear the vetting process receive their personalized digital ‘Vallière Member Card’ and official confirmation directly via email.",
@@ -400,6 +404,8 @@ export const content: Record<Lang, Dictionary> = {
       pledge:
         "Vallière Society kültürüne, zarafetine ve masanın saygınlığına bağlı kalacağımı taahhüt ederim.",
       submit: "DAVETİYE TALEP EDİN",
+      sending: "GÖNDERİLİYOR…",
+      error: "Bir sorun oluştu. Lütfen tekrar deneyin.",
       confidence: "Gizlilikle değerlendirilir",
       cardNote:
         "Mülakat sürecini başarıyla tamamlayan adaylara kişiye özel dijital ‘Vallière Üye Kartı’ ve onay belgesi e-posta aracılığıyla iletilmektedir.",
