@@ -1,14 +1,19 @@
 /**
- * HTML email templates for the VALLIÈRE application flow.
+ * HTML email templates for the VALLIÈRE application flow — theme-adaptive.
  *
- * Dark-native by design: `color-scheme: dark` signalling stops Gmail/Outlook
- * from auto-inverting the deep-green card, and every wrapper carries both an
- * inline `background-color` AND a `bgcolor` attribute so the dark ground fills
- * edge-to-edge in every client (no white gutters). A `prefers-color-scheme`
- * block + Outlook `[data-ogsc]` guards push the ground to absolute black.
+ * The email is LIGHT by default (ivory ground, dark text) and switches to a
+ * dark ground with cream text for dark-mode readers:
+ *   • Apple Mail / iOS honour `@media (prefers-color-scheme: dark)` (!important
+ *     overrides beat the inline light defaults).
+ *   • Gmail / Outlook auto-invert a light email in dark mode, reaching the same
+ *     result — so the wrappers deliberately carry NO background-image (which
+ *     would block that inversion).
+ * The membership CARD stays deep forest green in both themes: it keeps a
+ * background-image, so no client inverts it — an elegant dark card on either
+ * ground, like an object laid on the page.
  *
- * The Pinyon Script signature loads via @import where the client allows it
- * (Apple Mail, iOS) and falls back to a system cursive elsewhere (Gmail).
+ * The Pinyon Script signature loads via @import where the client allows it and
+ * falls back to a system cursive elsewhere (Gmail).
  */
 
 export interface ApplicationData {
@@ -24,24 +29,32 @@ const WEB_URL = "https://vallieresociety.org";
 const WEB_LABEL = "vallieresociety.org";
 const CONTACT = "vallieresociety@gmail.com";
 
-const C = {
-  bg: "#0a0c0e", // dark outer ground (light-mode fallback — still dark)
-  bgDark: "#070809", // absolute black (dark mode)
-  cardTop: "#0B1D16",
-  cardBottom: "#050E0A",
+// Light theme (inline defaults) and dark theme (applied via !important classes).
+const L = {
+  page: "#f5f4ef", // silk ivory ground
+  text: "#2a2824",
+  muted: "#6f6b63",
+  accent: "#9c7c1f", // deep gold, legible on ivory
+  hair: "#ddd8cd",
+};
+const D = {
+  page: "#0a0c0e",
+  text: "#E5E0D8",
+  muted: "#a7a294",
+  accent: "#E6C687",
+  hair: "#1e2c24",
+};
+
+// The membership card — constant deep-green, never theme-swapped.
+const K = {
+  top: "#0B1D16",
+  bottom: "#050E0A",
   gold: "#D4AF37",
   foil: "#E6C687",
   cream: "#E5E0D8",
-  creamMuted: "#a7a294",
-  sealMuted: "#9a8a5a",
-  footMuted: "#8b8778",
-  hairline: "#1e2c24",
+  seal: "#9a8a5a",
+  hair: "#1e2c24",
 };
-
-// A dark "surface" that also carries a background-image. Gmail (and other
-// clients') dark mode skips inversion on image-backed cells, so applying this
-// to every text container keeps the body dark instead of flipping to white.
-const SURFACE = `background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});`;
 
 /** Escapes user-supplied text before it is placed into HTML. */
 export function escapeHtml(input: string): string {
@@ -59,8 +72,7 @@ function nl2br(input: string): string {
 }
 
 /**
- * Turkish-aware Title Case: "arda öztürk" → "Arda Öztürk",
- * "ISTANBUL" → "İstanbul". Uses the tr locale so dotted/dotless i behave.
+ * Turkish-aware Title Case: "arda öztürk" → "Arda Öztürk".
  */
 export function titleCase(input: string): string {
   return String(input ?? "")
@@ -81,36 +93,35 @@ export function makeReference(): string {
 }
 
 /**
- * The physical VIP membership card — matte forest-green gradient, glinting
- * gold frame, embossed gold-foil type, a centred corner seal, an official
- * domain badge and a calligraphic signature. Reused in both emails.
+ * The physical VIP membership card (always deep forest green). The
+ * background-image keeps every client from inverting it in dark mode.
  */
 export function candidateCard(name: string, ref: string): string {
   const displayName = escapeHtml(titleCase(name) || "—");
   const foil =
     "color:" +
-    C.foil +
+    K.foil +
     ";text-shadow:0 1px 0 rgba(0,0,0,0.55), 0 0 12px rgba(230,198,135,0.28);";
 
   return `
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:524px;margin:0 auto;">
     <tr>
-      <td bgcolor="${C.cardTop}" style="background:${C.cardTop};background-image:linear-gradient(135deg, ${C.cardTop} 0%, ${C.cardBottom} 100%);border:1px solid ${C.gold};border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(212,175,55,0.1);">
+      <td bgcolor="${K.top}" style="background:${K.top};background-image:linear-gradient(135deg, ${K.top} 0%, ${K.bottom} 100%);border:1px solid ${K.gold};border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(212,175,55,0.1);">
         <div style="background-image:radial-gradient(130% 100% at 12% 6%, rgba(212,175,55,0.10), rgba(212,175,55,0) 55%);border-radius:18px;padding:32px 30px 26px;">
 
           <!-- Top row: house line (left) + centred corner seal (right) -->
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-              <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;line-height:1.75;letter-spacing:2.5px;color:${C.foil};text-transform:uppercase;">
+              <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;line-height:1.75;letter-spacing:2.5px;color:${K.foil};text-transform:uppercase;">
                 Valli&egrave;re Society<br>
-                <span style="color:${C.sealMuted};">Student Founders Collective</span>
+                <span style="color:${K.seal};">Student Founders Collective</span>
               </td>
               <td valign="middle" align="right" width="96">
                 <table role="presentation" cellpadding="0" cellspacing="0" align="right">
                   <tr>
                     <td align="center" style="text-align:center;">
-                      <div style="width:46px;height:46px;line-height:46px;border:1px solid ${C.gold};border-radius:50%;text-align:center;color:${C.foil};font-family:Georgia,'Times New Roman',serif;font-size:21px;box-shadow:inset 0 0 9px rgba(212,175,55,0.28);margin:0 auto;">V</div>
-                      <div style="font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:1.6px;color:${C.sealMuted};text-transform:uppercase;text-align:center;margin-top:9px;">Member Record</div>
+                      <div style="width:46px;height:46px;line-height:46px;border:1px solid ${K.gold};border-radius:50%;text-align:center;color:${K.foil};font-family:Georgia,'Times New Roman',serif;font-size:21px;box-shadow:inset 0 0 9px rgba(212,175,55,0.28);margin:0 auto;">V</div>
+                      <div style="font-family:Arial,Helvetica,sans-serif;font-size:7px;letter-spacing:1.6px;color:${K.seal};text-transform:uppercase;text-align:center;margin-top:9px;">Member Record</div>
                     </td>
                   </tr>
                 </table>
@@ -119,18 +130,18 @@ export function candidateCard(name: string, ref: string): string {
           </table>
 
           <!-- Holder name (embossed gold foil, Title Case) -->
-          <div style="font-family:Georgia,'Times New Roman',serif;font-size:25px;line-height:1.25;color:${C.cream};margin-top:26px;">
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:25px;line-height:1.25;color:${K.cream};margin-top:26px;">
             SAYIN <span style="${foil}">${displayName}</span>
           </div>
 
           <!-- Reference -->
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;letter-spacing:2px;color:${C.foil};margin-top:11px;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;letter-spacing:2px;color:${K.foil};margin-top:11px;">
             REF: <span style="${foil}">${escapeHtml(ref)}</span>
           </div>
 
           <!-- Status -->
           <div style="margin-top:22px;">
-            <span style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.8px;color:${C.foil};border:1px solid ${C.gold};border-radius:999px;padding:7px 15px;text-transform:uppercase;">
+            <span style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.8px;color:${K.foil};border:1px solid ${K.gold};border-radius:999px;padding:7px 15px;text-transform:uppercase;">
               Under Review &bull; In Confidence
             </span>
           </div>
@@ -138,14 +149,14 @@ export function candidateCard(name: string, ref: string): string {
           <!-- Divider: official domain (left) + calligraphic signature (right) -->
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:26px;">
             <tr>
-              <td valign="bottom" style="border-top:1px solid ${C.hairline};padding-top:14px;">
-                <div style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:1.8px;color:${C.sealMuted};text-transform:uppercase;">
+              <td valign="bottom" style="border-top:1px solid ${K.hair};padding-top:14px;">
+                <div style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:1.8px;color:${K.seal};text-transform:uppercase;">
                   Official Domain
                 </div>
-                <a href="${WEB_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;letter-spacing:1px;color:${C.foil};text-decoration:none;">${WEB_LABEL}</a>
+                <a href="${WEB_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;letter-spacing:1px;color:${K.foil};text-decoration:none;">${WEB_LABEL}</a>
               </td>
-              <td valign="bottom" align="right" style="border-top:1px solid ${C.hairline};padding-top:8px;">
-                <div style="font-family:'Pinyon Script','Segoe Script','Brush Script MT',cursive;font-size:42px;line-height:1;color:${C.foil};text-align:right;text-shadow:0 0 14px rgba(230,198,135,0.25);">
+              <td valign="bottom" align="right" style="border-top:1px solid ${K.hair};padding-top:8px;">
+                <div style="font-family:'Pinyon Script','Segoe Script','Brush Script MT',cursive;font-size:42px;line-height:1;color:${K.foil};text-align:right;text-shadow:0 0 14px rgba(230,198,135,0.25);">
                   Valli&egrave;re
                 </div>
               </td>
@@ -158,39 +169,42 @@ export function candidateCard(name: string, ref: string): string {
   </table>`;
 }
 
-/** Shared document shell — dark ground filled edge-to-edge in every client. */
+/** Shared document shell — light by default, dark via media query / auto-invert. */
 function shell(inner: string, preview: string): string {
   return `<!doctype html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="dark">
-<meta name="supported-color-schemes" content="dark">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
 <style>
-  :root { color-scheme: dark; supported-color-schemes: dark; }
+  :root { color-scheme: light dark; supported-color-schemes: light dark; }
   @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
   body, table, td { margin:0; padding:0; }
-  body { background-color:${C.bg} !important; }
-  a { color:${C.gold}; }
+  a { text-decoration:none; }
+  /* Dark-mode readers that honour the media query (Apple Mail, iOS Mail …). */
   @media (prefers-color-scheme: dark) {
-    .v-bg { background-color:${C.bgDark} !important; }
+    .v-page { background-color:${D.page} !important; }
+    .v-text { color:${D.text} !important; }
+    .v-muted { color:${D.muted} !important; }
+    .v-accent { color:${D.accent} !important; }
+    .v-hair { border-color:${D.hair} !important; }
   }
-  /* Outlook.com dark-mode guards */
-  [data-ogsc] .v-bg { background-color:${C.bgDark} !important; }
-  [data-ogsc] .v-cream { color:${C.cream} !important; }
-  [data-ogsc] .v-muted { color:${C.creamMuted} !important; }
-  [data-ogsc] .v-foot { color:${C.footMuted} !important; }
+  /* Outlook.com dark mode. */
+  [data-ogsc] .v-page { background-color:${D.page} !important; }
+  [data-ogsc] .v-text { color:${D.text} !important; }
+  [data-ogsc] .v-muted { color:${D.muted} !important; }
+  [data-ogsc] .v-accent { color:${D.accent} !important; }
+  [data-ogsc] .v-hair { border-color:${D.hair} !important; }
 </style>
 </head>
-<body class="v-bg" bgcolor="${C.bg}" style="margin:0;padding:0;background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});color-scheme:dark;">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${C.bg};font-size:1px;line-height:1px;">${escapeHtml(preview)}</div>
-<table role="presentation" class="v-bg" width="100%" height="100%" bgcolor="${C.bg}" cellpadding="0" cellspacing="0" style="background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});width:100%;">
+<body class="v-page" bgcolor="${L.page}" style="margin:0;padding:0;background-color:${L.page};">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${L.page};font-size:1px;line-height:1px;">${escapeHtml(preview)}</div>
+<table role="presentation" class="v-page" width="100%" height="100%" bgcolor="${L.page}" cellpadding="0" cellspacing="0" style="background-color:${L.page};width:100%;">
   <tr>
-    <td class="v-bg" align="center" bgcolor="${C.bg}" style="background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});padding:34px 16px;">
-      <!-- Inner surface carries its own dark background-image so Gmail dark mode
-           does not invert the body area to white (it skips image-backed cells). -->
-      <table role="presentation" class="v-bg" bgcolor="${C.bg}" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});">
+    <td class="v-page" align="center" bgcolor="${L.page}" style="background-color:${L.page};padding:34px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;">
         ${inner}
       </table>
     </td>
@@ -203,9 +217,11 @@ function shell(inner: string, preview: string): string {
 /** The automated / no-reply footer notice (applicant email). */
 function noReplyNotice(): string {
   return `
-    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:32px 10px 0;">
-      <div class="v-foot" style="border-top:1px solid ${C.hairline};padding-top:20px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.75;color:${C.footMuted};text-align:center;">
-        Bu e-posta otomatik bir sistem tarafından gönderilmiştir ve yanıtları kabul etmemektedir. Adaylığınız veya üyelik süreciyle ilgili sorularınız için lütfen doğrudan <a href="mailto:${CONTACT}" style="color:${C.gold};text-decoration:none;">${CONTACT}</a> adresi üzerinden iletişime geçiniz.
+    <tr><td style="padding:32px 10px 0;">
+      <div class="v-hair" style="border-top:1px solid ${L.hair};padding-top:20px;">
+        <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.75;color:${L.muted};text-align:center;">
+          Bu e-posta otomatik bir sistem tarafından gönderilmiştir ve yanıtları kabul etmemektedir. Adaylığınız veya üyelik süreciyle ilgili sorularınız için lütfen doğrudan <a class="v-accent" href="mailto:${CONTACT}" style="color:${L.accent};">${CONTACT}</a> adresi üzerinden iletişime geçiniz.
+        </div>
       </div>
     </td></tr>`;
 }
@@ -214,22 +230,22 @@ function noReplyNotice(): string {
 export function applicantEmail(data: ApplicationData, ref: string): string {
   const displayName = escapeHtml(titleCase(data.fullName));
   const p = (html: string) =>
-    `<p class="v-cream" style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.85;color:${C.cream};margin:0 0 18px;">${html}</p>`;
+    `<p class="v-text" style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.85;color:${L.text};margin:0 0 18px;">${html}</p>`;
 
   const inner = `
-    <tr><td style="${SURFACE}">${candidateCard(data.fullName, ref)}</td></tr>
-    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:38px 10px 0;">
-      ${p(`Sayın <span style="color:${C.foil};">${displayName}</span>,`)}
+    <tr><td>${candidateCard(data.fullName, ref)}</td></tr>
+    <tr><td style="padding:38px 10px 0;">
+      ${p(`Sayın <span class="v-accent" style="color:${L.accent};">${displayName}</span>,`)}
       ${p("Vallière Masası’na göstermiş olduğunuz ilgi ve ilettiğiniz beyanlar kayıtlarımıza geçmiştir.")}
       ${p("Girişimci öğrencilerin vizyonunu, entelektüel derinliğini ve üretim gücünü tek bir elit çatıda buluşturan topluluğumuz; başvurunuzu temel değerlerimiz (Özen &amp; Duruş, Açık Diyalog ve Ortak Vizyon) çerçevesinde değerlendirecektir.")}
       ${p("Değerlendirme Komitesi incelemelerini gizlilik esasına sadık kalarak yürütecek; süreç ve mülakat davetleri hakkındaki bilgilendirmeler yalnızca doğrudan sizinle temas kurulması uygun görüldüğü takdirde bu e-posta adresi üzerinden sağlanacaktır.")}
       ${p("Müzakerelerinize özen, duruşunuza saygıyla.")}
     </td></tr>
-    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:16px 10px 0;">
-      <div style="border-top:1px solid ${C.hairline};padding-top:22px;">
-        <div style="font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${C.foil};">Vallière Evaluation Committee</div>
-        <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${C.creamMuted};margin-top:6px;">A Collective of Student Founders &amp; Innovators</div>
-        <a href="${WEB_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${C.gold};text-decoration:none;margin-top:8px;display:inline-block;">${WEB_LABEL}</a>
+    <tr><td style="padding:16px 10px 0;">
+      <div class="v-hair" style="border-top:1px solid ${L.hair};padding-top:22px;">
+        <div class="v-accent" style="font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${L.accent};">Vallière Evaluation Committee</div>
+        <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${L.muted};margin-top:6px;">A Collective of Student Founders &amp; Innovators</div>
+        <a class="v-accent" href="${WEB_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${L.accent};margin-top:8px;display:inline-block;">${WEB_LABEL}</a>
       </div>
     </td></tr>
     ${noReplyNotice()}`;
@@ -241,27 +257,27 @@ export function applicantEmail(data: ApplicationData, ref: string): string {
 export function internalEmail(data: ApplicationData, ref: string): string {
   const row = (label: string, value?: string) => `
     <tr>
-      <td class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:${C.creamMuted};padding:16px 0 4px;border-top:1px solid ${C.hairline};">
+      <td class="v-muted v-hair" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:${L.muted};padding:16px 0 4px;border-top:1px solid ${L.hair};">
         ${escapeHtml(label)}
       </td>
     </tr>
     <tr>
-      <td class="v-cream" style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.6;color:${C.cream};padding:0 0 6px;">
-        ${value && value.trim() ? nl2br(value) : `<span style="color:#5f6b63;">—</span>`}
+      <td class="v-text" style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.6;color:${L.text};padding:0 0 6px;">
+        ${value && value.trim() ? nl2br(value) : `<span class="v-muted" style="color:${L.muted};">—</span>`}
       </td>
     </tr>`;
 
   const inner = `
-    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:0 0 26px;">
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:${C.foil};">
+    <tr><td style="padding:0 0 26px;">
+      <div class="v-accent" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:${L.accent};">
         New Candidacy &bull; ${escapeHtml(ref)}
       </div>
-      <div class="v-cream" style="font-family:Georgia,'Times New Roman',serif;font-size:24px;color:${C.cream};margin-top:10px;">
+      <div class="v-text" style="font-family:Georgia,'Times New Roman',serif;font-size:24px;color:${L.text};margin-top:10px;">
         ${escapeHtml(titleCase(data.fullName))}
       </div>
     </td></tr>
 
-    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}">
+    <tr><td>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         ${row("Full Name", titleCase(data.fullName))}
         ${row("University / Department", data.university)}
@@ -272,8 +288,8 @@ export function internalEmail(data: ApplicationData, ref: string): string {
       </table>
     </td></tr>
 
-    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:36px 0 0;">
-      <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:${C.creamMuted};padding-bottom:16px;">
+    <tr><td style="padding:36px 0 0;">
+      <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:${L.muted};padding-bottom:16px;">
         Candidate Card Preview
       </div>
       ${candidateCard(data.fullName, ref)}
