@@ -4,6 +4,8 @@
 
 [build]
   command = "npm run build"
+  # Must not be the repo root; the Next.js runtime serves from .next.
+  publish = ".next"
 
 [build.environment]
   # Pin a Node version Next 14.2 fully supports.
