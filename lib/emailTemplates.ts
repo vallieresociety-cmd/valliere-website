@@ -38,6 +38,11 @@ const C = {
   hairline: "#1e2c24",
 };
 
+// A dark "surface" that also carries a background-image. Gmail (and other
+// clients') dark mode skips inversion on image-backed cells, so applying this
+// to every text container keeps the body dark instead of flipping to white.
+const SURFACE = `background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});`;
+
 /** Escapes user-supplied text before it is placed into HTML. */
 export function escapeHtml(input: string): string {
   return String(input ?? "")
@@ -178,12 +183,14 @@ function shell(inner: string, preview: string): string {
   [data-ogsc] .v-foot { color:${C.footMuted} !important; }
 </style>
 </head>
-<body class="v-bg" bgcolor="${C.bg}" style="margin:0;padding:0;background-color:${C.bg};color-scheme:dark;">
+<body class="v-bg" bgcolor="${C.bg}" style="margin:0;padding:0;background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});color-scheme:dark;">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${C.bg};font-size:1px;line-height:1px;">${escapeHtml(preview)}</div>
-<table role="presentation" class="v-bg" width="100%" height="100%" bgcolor="${C.bg}" cellpadding="0" cellspacing="0" style="background-color:${C.bg};width:100%;">
+<table role="presentation" class="v-bg" width="100%" height="100%" bgcolor="${C.bg}" cellpadding="0" cellspacing="0" style="background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});width:100%;">
   <tr>
-    <td class="v-bg" align="center" bgcolor="${C.bg}" style="background-color:${C.bg};padding:34px 16px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;">
+    <td class="v-bg" align="center" bgcolor="${C.bg}" style="background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});padding:34px 16px;">
+      <!-- Inner surface carries its own dark background-image so Gmail dark mode
+           does not invert the body area to white (it skips image-backed cells). -->
+      <table role="presentation" class="v-bg" bgcolor="${C.bg}" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background-color:${C.bg};background-image:linear-gradient(${C.bg},${C.bg});">
         ${inner}
       </table>
     </td>
@@ -196,7 +203,7 @@ function shell(inner: string, preview: string): string {
 /** The automated / no-reply footer notice (applicant email). */
 function noReplyNotice(): string {
   return `
-    <tr><td style="padding:32px 10px 0;">
+    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:32px 10px 0;">
       <div class="v-foot" style="border-top:1px solid ${C.hairline};padding-top:20px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.75;color:${C.footMuted};text-align:center;">
         Bu e-posta otomatik bir sistem tarafından gönderilmiştir ve yanıtları kabul etmemektedir. Adaylığınız veya üyelik süreciyle ilgili sorularınız için lütfen doğrudan <a href="mailto:${CONTACT}" style="color:${C.gold};text-decoration:none;">${CONTACT}</a> adresi üzerinden iletişime geçiniz.
       </div>
@@ -210,15 +217,15 @@ export function applicantEmail(data: ApplicationData, ref: string): string {
     `<p class="v-cream" style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.85;color:${C.cream};margin:0 0 18px;">${html}</p>`;
 
   const inner = `
-    <tr><td>${candidateCard(data.fullName, ref)}</td></tr>
-    <tr><td style="padding:38px 10px 0;">
+    <tr><td style="${SURFACE}">${candidateCard(data.fullName, ref)}</td></tr>
+    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:38px 10px 0;">
       ${p(`Sayın <span style="color:${C.foil};">${displayName}</span>,`)}
       ${p("Vallière Masası’na göstermiş olduğunuz ilgi ve ilettiğiniz beyanlar kayıtlarımıza geçmiştir.")}
       ${p("Girişimci öğrencilerin vizyonunu, entelektüel derinliğini ve üretim gücünü tek bir elit çatıda buluşturan topluluğumuz; başvurunuzu temel değerlerimiz (Özen &amp; Duruş, Açık Diyalog ve Ortak Vizyon) çerçevesinde değerlendirecektir.")}
       ${p("Değerlendirme Komitesi incelemelerini gizlilik esasına sadık kalarak yürütecek; süreç ve mülakat davetleri hakkındaki bilgilendirmeler yalnızca doğrudan sizinle temas kurulması uygun görüldüğü takdirde bu e-posta adresi üzerinden sağlanacaktır.")}
       ${p("Müzakerelerinize özen, duruşunuza saygıyla.")}
     </td></tr>
-    <tr><td style="padding:16px 10px 0;">
+    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:16px 10px 0;">
       <div style="border-top:1px solid ${C.hairline};padding-top:22px;">
         <div style="font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${C.foil};">Vallière Evaluation Committee</div>
         <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${C.creamMuted};margin-top:6px;">A Collective of Student Founders &amp; Innovators</div>
@@ -245,7 +252,7 @@ export function internalEmail(data: ApplicationData, ref: string): string {
     </tr>`;
 
   const inner = `
-    <tr><td style="padding:0 0 26px;">
+    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:0 0 26px;">
       <div style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:${C.foil};">
         New Candidacy &bull; ${escapeHtml(ref)}
       </div>
@@ -254,7 +261,7 @@ export function internalEmail(data: ApplicationData, ref: string): string {
       </div>
     </td></tr>
 
-    <tr><td>
+    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         ${row("Full Name", titleCase(data.fullName))}
         ${row("University / Department", data.university)}
@@ -265,7 +272,7 @@ export function internalEmail(data: ApplicationData, ref: string): string {
       </table>
     </td></tr>
 
-    <tr><td style="padding:36px 0 0;">
+    <tr><td class="v-bg" bgcolor="${C.bg}" style="${SURFACE}padding:36px 0 0;">
       <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:1.6px;text-transform:uppercase;color:${C.creamMuted};padding-bottom:16px;">
         Candidate Card Preview
       </div>
