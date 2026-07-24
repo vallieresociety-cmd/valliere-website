@@ -24,13 +24,19 @@ const pinyon = Pinyon_Script({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vallieresociety.org"),
   title: "VALLIÈRE — The Executive Founders Network",
   description:
     "A private, invitation-only circle uniting high-caliber founders, visionary engineers, and next-generation leaders in Trabzon.",
+  alternates: {
+    canonical: "https://vallieresociety.org",
+  },
   openGraph: {
     title: "VALLIÈRE — The Executive Founders Network",
     description:
       "A private circle uniting high-caliber founders, visionary engineers, and next-generation leaders.",
+    url: "https://vallieresociety.org",
+    siteName: "Vallière Society",
     type: "website",
   },
 };

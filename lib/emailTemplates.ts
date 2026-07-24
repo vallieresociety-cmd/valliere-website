@@ -20,6 +20,9 @@ export interface ApplicationData {
   value?: string;
 }
 
+const WEB_URL = "https://vallieresociety.org";
+const WEB_LABEL = "vallieresociety.org";
+
 const C = {
   bg: "#070a08", // near-black base (light-mode fallback — still dark)
   bgDark: "#050706", // absolute black (dark mode)
@@ -102,10 +105,16 @@ export function candidateCard(name: string, ref: string): string {
             </span>
           </div>
 
-          <!-- Divider + calligraphic signature -->
+          <!-- Divider: official domain badge (left) + calligraphic signature (right) -->
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:26px;">
             <tr>
-              <td style="border-top:1px solid ${C.hairline};padding-top:8px;" valign="bottom">
+              <td style="border-top:1px solid ${C.hairline};padding-top:14px;" valign="bottom">
+                <div style="font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:1.8px;color:${C.sealMuted};text-transform:uppercase;">
+                  Official Domain
+                </div>
+                <a href="${WEB_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;letter-spacing:1px;color:${C.foil};text-decoration:none;">${WEB_LABEL}</a>
+              </td>
+              <td style="border-top:1px solid ${C.hairline};padding-top:8px;" valign="bottom" align="right">
                 <div style="font-family:'Pinyon Script','Segoe Script','Brush Script MT',cursive;font-size:42px;line-height:1;color:${C.foil};text-align:right;text-shadow:0 0 14px rgba(230,198,135,0.25);">
                   Valli&egrave;re
                 </div>
@@ -175,7 +184,7 @@ export function applicantEmail(data: ApplicationData, ref: string): string {
       <div style="border-top:1px solid ${C.hairline};padding-top:22px;">
         <div style="font-family:Georgia,'Times New Roman',serif;font-size:14px;color:${C.foil};">Vallière Evaluation Committee</div>
         <div class="v-muted" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${C.creamMuted};margin-top:6px;">A Collective of Student Founders &amp; Innovators</div>
-        <a href="https://www.vallieresociety.com" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${C.gold};text-decoration:none;margin-top:8px;display:inline-block;">www.vallieresociety.com</a>
+        <a href="${WEB_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:${C.gold};text-decoration:none;margin-top:8px;display:inline-block;">${WEB_LABEL}</a>
       </div>
     </td></tr>`;
 

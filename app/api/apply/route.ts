@@ -46,7 +46,8 @@ export async function POST(req: Request) {
   }
 
   const resend = new Resend(apiKey);
-  const from = process.env.RESEND_FROM || "Vallière Society <onboarding@resend.dev>";
+  const from =
+    process.env.RESEND_FROM || "Vallière Society <apply@vallieresociety.org>";
   const notifyTo = process.env.APPLY_NOTIFY_TO || "vallieresociety@gmail.com";
 
   const ref = makeReference();

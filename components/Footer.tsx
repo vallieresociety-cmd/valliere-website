@@ -27,10 +27,10 @@ export default function Footer() {
             X
           </a>
           <a
-            href="mailto:membership@valliere.co"
+            href="mailto:vallieresociety@gmail.com"
             className="text-slate transition-colors duration-300 hover:text-champagne"
           >
-            membership@valliere.co
+            vallieresociety@gmail.com
           </a>
         </div>
 
