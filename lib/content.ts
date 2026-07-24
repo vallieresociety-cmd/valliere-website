@@ -178,19 +178,19 @@ export const content: Record<Lang, Dictionary> = {
           number: "01",
           title: "Application",
           description:
-            "A short intro form where you share what you build, your projects, and your vision.",
+            "The candidacy form where you convey your vision, entrepreneurial potential, and ambitions.",
         },
         {
           number: "02",
-          title: "Conversation",
+          title: "Evaluation",
           description:
-            "A relaxed get-to-know chat about your ideas, the technologies you love, and how you click with our community culture.",
+            "A private introduction session exploring cultural fit, ambition, and your projection of the future.",
         },
         {
           number: "03",
-          title: "Welcome",
+          title: "Induction",
           description:
-            "Joining the Vallière Society family — full access to the community, working groups, and shared projects.",
+            "Vallière Society membership — access to closed sessions, the strategic network, and the community table.",
         },
       ],
     },
@@ -240,27 +240,27 @@ export const content: Record<Lang, Dictionary> = {
       items: [
         {
           q: "Who can apply?",
-          a: "All university students into entrepreneurship, software, design and innovation — who want to build together, ship projects, and take a seat at the table with ambitious peers.",
+          a: "Ambitious university students with a high vision — those who intend to build their own ventures and help shape the business and entrepreneurship ecosystem.",
         },
         {
-          q: "Can I apply if I don’t have a concrete project yet?",
-          a: "Absolutely. What we look for is the desire to learn, curiosity, and a passion for building — far more than finished projects.",
+          q: "Can I apply without a founded venture yet?",
+          a: "Yes. What we seek is not a finished company but a clear vision, entrepreneurial potential, and the drive to build.",
         },
         {
           q: "Is there a membership fee?",
-          a: "No. Vallière Society is completely free — a collective built for students’ growth and solidarity.",
+          a: "No. Vallière Society is not a financial or commercial club; it is an independent entrepreneurial collective built on talent and vision, by invitation and application.",
         },
         {
           q: "What is expected of members?",
-          a: "Showing up to our gatherings, respecting the community and each other’s time, and giving genuine, constructive support to your peers’ work.",
+          a: "Active contribution to the collective culture, presence at our private sessions, and the pursuit of excellence in your own field.",
         },
         {
           q: "How does the process work?",
-          a: "A short intro form, a relaxed get-to-know chat, then a warm welcome into the community and its projects.",
+          a: "A concise candidacy form, a private introduction session, then induction into the collective.",
         },
         {
           q: "Where do we meet?",
-          a: "In Trabzon and online. Alongside regular online brainstorms and project sessions, we host in-person coffee meetups, workshops and work days at fine venues around the city.",
+          a: "Private invitation-only dinners, dress-code networking sessions, and strategy gatherings at distinguished venues — complemented by online sessions.",
         },
       ],
     },
@@ -362,19 +362,19 @@ export const content: Record<Lang, Dictionary> = {
           number: "01",
           title: "Başvuru",
           description:
-            "Ürettiklerini, projelerini ve vizyonunu bizlerle paylaşabileceğin kısa bir tanıtım formu.",
+            "Vizyonunuzu, girişimcilik potansiyelinizi ve hedeflerinizi aktardığınız adaylık formu.",
         },
         {
           number: "02",
           title: "Değerlendirme",
           description:
-            "Fikirlerin, ilgilendiğin teknolojiler ve topluluk kültürümüzle uyumunu konuştuğumuz samimi bir tanışma sohbeti.",
+            "Kültürel uyum, hırs ve gelecek projeksiyonunun konuşulduğu özel tanışma oturumu.",
         },
         {
           number: "03",
           title: "Kabul",
           description:
-            "Vallière Society ailesine katılım; komüniteye, çalışma gruplarına ve ortak projelere tam erişim.",
+            "Vallière Society üyeliği; kapalı oturumlara, stratejik network’e ve komünite masasına erişim.",
         },
       ],
     },
@@ -425,27 +425,27 @@ export const content: Record<Lang, Dictionary> = {
       items: [
         {
           q: "Kimler başvurabilir?",
-          a: "Girişimcilik, yazılım, tasarım ve inovasyona ilgi duyan; birlikte üretmek, projeler geliştirmek ve hırslı akranlarıyla aynı masada yer almak isteyen tüm üniversite öğrencileri.",
+          a: "Kendi işini kurmak isteyen, yüksek vizyona sahip, iş dünyasına ve girişimcilik ekosistemine yön vermeyi hedefleyen hırslı üniversite öğrencileri.",
         },
         {
-          q: "Henüz somut bir projem yoksa yine de başvurabilir miyim?",
-          a: "Kesinlikle! Aradığımız temel kriter bitmiş projelerden ziyade öğrenme arzusu, merak ve üretme tutkusudur.",
+          q: "Henüz kurulmuş bir girişimim yoksa yine de başvurabilir miyim?",
+          a: "Evet. Aradığımız bitmiş bir şirket değil; net bir vizyon, girişimci potansiyel ve üretme hırsıdır.",
         },
         {
           q: "Üyelik ücretli mi?",
-          a: "Hayır, Vallière Society tamamen öğrencilerin gelişimini ve dayanışmasını hedefleyen ücretsiz bir kolektiftir.",
+          a: "Hayır. Vallière Society finansal veya ticari bir kulüp değil; yetenek ve vizyon odaklı, davet/başvuru esasına dayanan bağımsız bir girişimcilik kolektifidir.",
         },
         {
           q: "Üyelerden ne beklenir?",
-          a: "Buluşmalara katılım, topluluğa ve birbirimizin emeğine saygı, ve akranlarının projelerine samimi, yapıcı katkı sunmak.",
+          a: "Kolektif kültüre aktif katkı, özel oturumlara katılım ve kendi alanında mükemmellik arayışı.",
         },
         {
           q: "Süreç nasıl işliyor?",
-          a: "Kısa bir tanıtım formu, samimi bir tanışma sohbeti ve ardından topluluğa ve projelere sıcak bir “hoş geldin”.",
+          a: "Kısa bir adaylık formu, özel bir tanışma oturumu ve ardından kolektife kabul.",
         },
         {
           q: "Nerede buluşuyoruz?",
-          a: "Trabzon’da ve online. Düzenli online beyin fırtınaları ve proje oturumlarının yanı sıra, şehrimizdeki nitelikli mekanlarda yüz yüze kahve buluşmaları, atölyeler ve çalışma günleri düzenliyoruz.",
+          a: "Özel davetli kapalı akşam yemekleri, dress-code içeren ağ kurma oturumları ve nitelikli mekanlardaki strateji buluşmalarımızın yanı sıra online oturumlar düzenliyoruz.",
         },
       ],
     },
