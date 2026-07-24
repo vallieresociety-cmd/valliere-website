@@ -178,19 +178,19 @@ export const content: Record<Lang, Dictionary> = {
           number: "01",
           title: "Application",
           description:
-            "Submission of your track record, what you build, and your strategic background.",
+            "A short intro form where you share what you build, your projects, and your vision.",
         },
         {
           number: "02",
-          title: "Vetting",
+          title: "Conversation",
           description:
-            "A private conversation evaluating vision, technical competence, and cultural fit.",
+            "A relaxed get-to-know chat about your ideas, the technologies you love, and how you click with our community culture.",
         },
         {
           number: "03",
-          title: "Induction",
+          title: "Welcome",
           description:
-            "Access granted to the private network, the initial table, and executive sessions.",
+            "Joining the Vallière Society family — full access to the community, working groups, and shared projects.",
         },
       ],
     },
@@ -240,23 +240,27 @@ export const content: Record<Lang, Dictionary> = {
       items: [
         {
           q: "Who can apply?",
-          a: "Ambitious university students — founders, engineers, designers, and builders — who treat entrepreneurship as a craft and want a high-calibre peer table.",
+          a: "All university students into entrepreneurship, software, design and innovation — who want to build together, ship projects, and take a seat at the table with ambitious peers.",
+        },
+        {
+          q: "Can I apply if I don’t have a concrete project yet?",
+          a: "Absolutely. What we look for is the desire to learn, curiosity, and a passion for building — far more than finished projects.",
         },
         {
           q: "Is there a membership fee?",
-          a: "No. Selection is by merit alone, and the Member Card is digital — there is no payment or subscription involved at any stage.",
+          a: "No. Vallière Society is completely free — a collective built for students’ growth and solidarity.",
         },
         {
           q: "What is expected of members?",
-          a: "Presence at our gatherings, respect for the dress-code and the table, and genuine, constructive contribution to your peers’ work.",
+          a: "Showing up to our gatherings, respecting the community and each other’s time, and giving genuine, constructive support to your peers’ work.",
         },
         {
-          q: "How does the vetting work?",
-          a: "A short application, a private conversation on vision and competence, then induction into the network and the initial table.",
+          q: "How does the process work?",
+          a: "A short intro form, a relaxed get-to-know chat, then a warm welcome into the community and its projects.",
         },
         {
-          q: "Where does VALLIÈRE meet?",
-          a: "In Trabzon, through periodic private dinners and focused working sessions — with a growing network reaching beyond the city.",
+          q: "Where do we meet?",
+          a: "In Trabzon and online. Alongside regular online brainstorms and project sessions, we host in-person coffee meetups, workshops and work days at fine venues around the city.",
         },
       ],
     },
@@ -358,19 +362,19 @@ export const content: Record<Lang, Dictionary> = {
           number: "01",
           title: "Başvuru",
           description:
-            "Geçmişinizin, ürettiklerinizin ve stratejik altyapınızın sunumu.",
+            "Ürettiklerini, projelerini ve vizyonunu bizlerle paylaşabileceğin kısa bir tanıtım formu.",
         },
         {
           number: "02",
           title: "Değerlendirme",
           description:
-            "Vizyon, teknik yetkinlik ve kültürel uyumu ölçen özel bir görüşme.",
+            "Fikirlerin, ilgilendiğin teknolojiler ve topluluk kültürümüzle uyumunu konuştuğumuz samimi bir tanışma sohbeti.",
         },
         {
           number: "03",
           title: "Kabul",
           description:
-            "Özel ağa, ilk masaya ve yönetici oturumlarına erişim.",
+            "Vallière Society ailesine katılım; komüniteye, çalışma gruplarına ve ortak projelere tam erişim.",
         },
       ],
     },
@@ -421,23 +425,27 @@ export const content: Record<Lang, Dictionary> = {
       items: [
         {
           q: "Kimler başvurabilir?",
-          a: "Girişimciliği bir zanaat olarak gören; kurucu, mühendis, tasarımcı ve üretken ruhlu, nitelikli bir akran masası isteyen hırslı üniversite öğrencileri.",
+          a: "Girişimcilik, yazılım, tasarım ve inovasyona ilgi duyan; birlikte üretmek, projeler geliştirmek ve hırslı akranlarıyla aynı masada yer almak isteyen tüm üniversite öğrencileri.",
         },
         {
-          q: "Üyelik ücreti var mı?",
-          a: "Hayır. Seçim yalnızca liyakatle yapılır ve Üye Kartı dijitaldir — sürecin hiçbir aşamasında ödeme veya abonelik yoktur.",
+          q: "Henüz somut bir projem yoksa yine de başvurabilir miyim?",
+          a: "Kesinlikle! Aradığımız temel kriter bitmiş projelerden ziyade öğrenme arzusu, merak ve üretme tutkusudur.",
+        },
+        {
+          q: "Üyelik ücretli mi?",
+          a: "Hayır, Vallière Society tamamen öğrencilerin gelişimini ve dayanışmasını hedefleyen ücretsiz bir kolektiftir.",
         },
         {
           q: "Üyelerden ne beklenir?",
-          a: "Buluşmalarda hazır bulunmak, dress-code’a ve masaya saygı göstermek ve akranların işine samimi, yapıcı katkı sunmak.",
+          a: "Buluşmalara katılım, topluluğa ve birbirimizin emeğine saygı, ve akranlarının projelerine samimi, yapıcı katkı sunmak.",
         },
         {
-          q: "Değerlendirme nasıl işler?",
-          a: "Kısa bir başvuru, vizyon ve yetkinlik üzerine özel bir görüşme, ardından ağa ve ilk masaya kabul.",
+          q: "Süreç nasıl işliyor?",
+          a: "Kısa bir tanıtım formu, samimi bir tanışma sohbeti ve ardından topluluğa ve projelere sıcak bir “hoş geldin”.",
         },
         {
-          q: "VALLIÈRE nerede buluşur?",
-          a: "Trabzon’da, belirli aralıklarla düzenlenen özel akşam yemekleri ve odak oturumlarıyla — şehrin ötesine uzanan büyüyen bir ağla.",
+          q: "Nerede buluşuyoruz?",
+          a: "Trabzon’da ve online. Düzenli online beyin fırtınaları ve proje oturumlarının yanı sıra, şehrimizdeki nitelikli mekanlarda yüz yüze kahve buluşmaları, atölyeler ve çalışma günleri düzenliyoruz.",
         },
       ],
     },

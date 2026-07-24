@@ -130,6 +130,28 @@ export default function Application() {
               transition={{ duration: 0.4 }}
               className="space-y-10"
             >
+              {/* Honeypot — hidden from humans, only bots fill it. */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  left: "-9999px",
+                  width: 1,
+                  height: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <label>
+                  Company
+                  <input
+                    type="text"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </label>
+              </div>
+
               {textFields.map((field) => (
                 <div key={field.name}>
                   <label className={labelClass} htmlFor={field.name}>

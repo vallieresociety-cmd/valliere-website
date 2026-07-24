@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
 import { useLang } from "./LanguageProvider";
+
+// Silky, velvet easing for the accordion reveal.
+const SILK = [0.16, 1, 0.3, 1] as const;
 
 function AccordionItem({
   q,
@@ -20,6 +23,7 @@ function AccordionItem({
 }) {
   const panelId = `faq-panel-${index}`;
   const buttonId = `faq-button-${index}`;
+  const reduce = useReducedMotion();
 
   return (
     <div className="border-b border-white/[0.08]">
@@ -43,7 +47,7 @@ function AccordionItem({
           <span className="relative h-4 w-4 flex-shrink-0">
             <span className="absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-gold/70" />
             <span
-              className={`absolute left-1/2 top-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-gold/70 transition-transform duration-500 ${
+              className={`absolute left-1/2 top-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-gold/70 transition-transform duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
                 isOpen ? "rotate-90" : "rotate-0"
               }`}
             />
@@ -61,8 +65,17 @@ function AccordionItem({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
+            transition={
+              reduce
+                ? { duration: 0 }
+                : {
+                    height: { duration: 0.55, ease: SILK },
+                    opacity: { duration: 0.4, ease: SILK, delay: isOpen ? 0.06 : 0 },
+                  }
+            }
+            // Promote to its own compositor layer so the reveal stays silky on mobile.
+            style={{ willChange: "height, opacity", transform: "translateZ(0)" }}
+            className="overflow-hidden [backface-visibility:hidden]"
           >
             <p className="max-w-2xl pb-8 pr-10 text-sm font-light leading-relaxed text-slate sm:text-[0.95rem]">
               {a}
