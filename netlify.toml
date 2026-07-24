@@ -1,0 +1,13 @@
+# Netlify configuration for the VALLIÈRE (Next.js 14 App Router) site.
+# The official Next.js runtime plugin handles the build output, routing,
+# and serverless/edge functions automatically — no publish dir needed.
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  # Pin a Node version Next 14.2 fully supports.
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
