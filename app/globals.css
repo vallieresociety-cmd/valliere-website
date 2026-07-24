@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+/* Smooth scrolling is handled in JS (lib/smoothScroll.ts) for a slow,
+   cinematic glide; leaving the CSS property off avoids fighting it. */
+
+body {
+  background-color: theme("colors.obsidian");
+  color: theme("colors.ivory");
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Never allow sideways scroll on mobile, even if a child overshoots. */
+  overflow-x: hidden;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(180deg, #f0d98a 0%, #e6ca65 40%, #d4af37 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Fine hairline dividers used throughout the layout */
+  .hairline {
+    border-color: rgba(245, 245, 240, 0.08);
+  }
+
+  /* Subtle grain to keep large dark fields from banding */
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Custom selection */
+::selection {
+  background: rgba(212, 175, 55, 0.22);
+  color: #f5f5f0;
+}
+
+/* Minimal, refined scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c1c1e;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a2c;
+}
